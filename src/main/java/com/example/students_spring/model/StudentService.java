@@ -1,14 +1,17 @@
 package com.example.students_spring.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.*;
+
+@Service
 public class StudentService {
-    StudentRepo studentRepo = new StudentRepo();
+    private final StudentRepo studentRepo;
 
-    public StudentService() {
+    @Autowired
+    public StudentService(StudentRepo studentRepo) {
+        this.studentRepo = studentRepo;
     }
 
     public Map<String, Student> getStudents() {
@@ -19,12 +22,22 @@ public class StudentService {
         return studentRepo.getStudentbyID(id);
     }
 
-    public void addStudent(Student newStudent) {
-        studentRepo.addStudent(newStudent);
+    public boolean addStudent(Student newStudent) {
+        return studentRepo.addStudent(newStudent);
     }
 
     public List<Student> getStudentsAsArrayList() {
        return new ArrayList<Student>(getStudents().values());
+    }
+
+    public Optional<Student> getStudentByName(String name) {
+        List<Student> students = getStudentsAsArrayList();
+        for (Student student : students) {
+            if (student.getName().equals(name)) {
+                return Optional.of(student);
+            }
+        }
+        return Optional.empty();
     }
 
     public void deleteStudentByID(String id) {
