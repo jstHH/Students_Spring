@@ -1,12 +1,14 @@
 package com.example.students_spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class Student {
     protected String name;
-    protected int ID;
+    protected String ID;
 
-    public Student(String name, int ID) {
+    public Student(String name, String ID) {
         this.name = name;
         this.ID = ID;
     }
@@ -21,11 +23,12 @@ public class Student {
         return name;
     }
 
-    public int getID() {
+
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
